@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load have_book %}
+
+{% block content %}
+    <ul class="w-75">
+        {% for book_ownership in page_obj %}
+        <li class="card mb-4">
+            <div class="card-body align-items-center">
+                <div>
+                    <h5 class="card-title position-relative">{{book_ownership.book.name}}, {{book_ownership.book.author}}</h5>
+                    <h6 class="card-subtitle"><span class="fa fa-user me-2 text-center mb-1" style="width: 18px;"></span>{{book_ownership.user.username}} ({{book_ownership.user.reader.first_name}} {{book_ownership.user.reader.last_name}})</h6>
+                    <h6 class="card-subtitle"><span class="fa fa-house-user me-2"></span>{{book_ownership.user.reader.address}}</h6>
+                    <p class="card-text"><small class="text-body-secondary">Issued: {{book_ownership.date_issued|date:"d.m.y H:i T"}} ({{book_ownership.date_issued|timesince}})</small></p>
+                </div>
+            </div>
+            
+        </li>
+        {% endfor %}
+    </ul>
+    {% if page_obj.has_previous or page_obj.has_next %}
+    <nav>
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a href="?page={{page_obj.previous_page_number}}" class="page-link">
+                <span class="fa fa-left-long"></span>
+            </a></li>
+            {% endif %}
+
+            <li class="page-item active"><span class="page-link" style="cursor: pointer;">{{page_obj.number}}</span></li>
+
+            {% if page_obj.has_next %}
+            <li class="page-item"><a href="?page={{page_obj.next_page_number}}" class="page-link">
+                <span class="fa fa-right-long"></span>
+            </a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+{% endblock %}

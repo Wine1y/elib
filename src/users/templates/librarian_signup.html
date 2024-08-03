@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post" class="border p-2 w-75">
+    {% csrf_token %}
+    <div class="container d-flex flex-column align-items-center">
+        <h3>Sign Up As:</h3>
+        <div class="btn-group d-flex w-50">
+            <button type="button" class="btn btn-outline-info" onclick='window.location.href = "/accounts/signup/reader"'>Reader</button>
+            <button type="button" class="btn btn-info">Librarian</button>
+        </div>
+    </div>
+
+    <div class="mb-2">
+        <label class="form-label" for="username">Username</label>
+        {% if "username" in form.errors %}
+        <input class="form-control border-2 border-danger bg-danger-subtle" type="text" name="username">
+        <ul class="list-unstyled text-danger fw-semibold">
+            {% for error in form.errors.username %}
+            <li>{{error|escape}}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <input class="form-control" type="text" name="username">
+        {% endif %}
+    </div>
+    
+    <div class="mb-2">
+        <label class="form-label" for="password1">Password</label>
+        {% if "password1" in form.errors %}
+        <input class="form-control border-2 border-danger bg-danger-subtle" type="password" name="password1">
+        <ul class="list-unstyled text-danger fw-semibold">
+            {% for error in form.errors.password1 %}
+            <li>{{error|escape}}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <input class="form-control" type="password" name="password1">
+        {% endif %}
+    </div>
+    
+    <div class="mb-2">
+        <label class="form-label" for="password2">Confirm password</label>
+        {% if "password2" in form.errors %}
+        <input class="form-control border-2 border-danger bg-danger-subtle" type="password" name="password2">
+        <ul class="list-unstyled text-danger fw-semibold">
+            {% for error in form.errors.password2 %}
+            <li>{{error|escape}}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <input class="form-control" type="password" name="password2">
+        {% endif %}
+    </div>
+    <ul class="list-unstyled text-danger fw-semibold">
+        {% for error in form.non_field_errors %}
+        <li>
+            {{ error|escape }}
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="container d-flex flex-column align-items-center">
+        <button type="submit" class="btn btn-outline-success btn-lg w-25">Sign Up</button>
+        <span class="my-1">Already have an account? <a href="/accounts/signin">Sign In</a></span>
+    </div>
+</form>
+{% endblock %}
