@@ -2,6 +2,12 @@
 {% load have_book %}
 
 {% block content %}
+    {% if page_obj|length == 0 %}
+    <div class="d-flex flex-column align-items-center mb-3 fs-3">
+        <span>We have no books owners right now! Come back later.</span>
+        <i class="fa fa-face-surprise fs-1"></i>
+    </div>
+    {% else %}
     <ul class="w-75">
         {% for book_ownership in page_obj %}
         <li class="card mb-4">
@@ -17,6 +23,7 @@
         </li>
         {% endfor %}
     </ul>
+    {% endif %}
     {% if page_obj.has_previous or page_obj.has_next %}
     <nav>
         <ul class="pagination">
